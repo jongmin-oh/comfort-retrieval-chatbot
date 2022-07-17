@@ -21,7 +21,10 @@ qestion_embedder = SentenceTransformer("Huffon/sentence-klue-roberta-base")
 index = faiss.read_index("./faiss/sts.index")
 
 def chatbot_answer(query : str ) -> str :
-
+    
+    #----------------------------#
+    # Retrieval part             #
+    #----------------------------#
     qestion_embedding = qestion_embedder.encode(query, normalize_embeddings=True,convert_to_tensor=True)
     distances, indices = index.search(np.expand_dims(qestion_embedding,axis=0),3)
     
@@ -48,4 +51,7 @@ def chatbot_answer(query : str ) -> str :
     
     temp = pd.DataFrame(res)
     
-    return temp.loc[random.randint(0,2)].system
+    if len(temp) < 2 :
+        return temp.loc[0].system
+    
+    return temp.loc[random.randint(0,1)].system
