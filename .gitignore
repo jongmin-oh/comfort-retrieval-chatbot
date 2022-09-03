@@ -1,12 +1,14 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+app/__pycache__
+data/__pycache__
 *.py[cod]
 *$py.class
 
-data/
-faiss/
-models/
-config/
+
+app/data/
+app/faiss/
+app/sbert_models/
+secrets.json
 
 # C extensions
 *.so

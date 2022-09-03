@@ -23,7 +23,7 @@ WORKDIR /opt/comfort-bot
 RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 
 # 파이썬 패키지 설치
-dock
+RUN pip3 install -r requirements.txt
 
 # 실행
 CMD ["python3","service.py"]
