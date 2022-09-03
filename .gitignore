@@ -5,7 +5,7 @@ data/__pycache__
 *$py.class
 
 
-app/data/
+data/
 app/faiss/
 app/sbert_models/
 secrets.json
