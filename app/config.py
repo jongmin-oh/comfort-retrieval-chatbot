@@ -28,5 +28,11 @@ MYSQL_DB_NAME = get_secret("MYSQL_DB_NAME")
 MYSQL_URL = get_secret("MYSQL_URL")
 MYSQL_PORT = get_secret("MYSQL_PORT")
 
+MONGODB_USER = get_secret("MONGODB_USER")
+MONGODB_PASSWORD = get_secret("MONGODB_PASSWORD")
+MONGODB_DB_NAME = get_secret("MONGODB_DB_NAME")
+MONGODB_URL = get_secret("MONGODB_URL")
+MONGODB_PORT = get_secret("MONGODB_PORT")
+
 if __name__ == "__main__":
     pass

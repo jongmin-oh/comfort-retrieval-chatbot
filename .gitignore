@@ -3,8 +3,8 @@ app/__pycache__
 data/__pycache__
 *.py[cod]
 *$py.class
-*.DS_Store
 
+docker-compose.yml
 data/
 app/faiss/
 app/sbert_models/
