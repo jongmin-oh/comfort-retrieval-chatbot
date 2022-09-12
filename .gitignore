@@ -3,7 +3,7 @@ app/__pycache__
 data/__pycache__
 *.py[cod]
 *$py.class
-
+*.DS_Store
 
 data/
 app/faiss/

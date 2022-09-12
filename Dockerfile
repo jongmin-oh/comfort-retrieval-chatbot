@@ -1,5 +1,5 @@
 # 베이스 이미지
-FROM ubuntu:20.04
+FROM python:3.9.9-buster
 
 #설치시 질문 안나오게 설정
 ARG DEBIAN_FRONTEND=noninteractive
@@ -8,7 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 
 # 패키지 설치
-RUN apt-get install -y build-essential curl git g++
+RUN apt-get install -y curl git g++
 
 # 파이썬 설치
 RUN apt-get install -y python3 python3-pip
@@ -26,4 +26,4 @@ RUN pip3 install torch torchvision torchaudio --extra-index-url https://download
 RUN pip3 install -r requirements.txt
 
 # 실행
-CMD ["python3","service.py"]
+CMD ["python3","server.py"]

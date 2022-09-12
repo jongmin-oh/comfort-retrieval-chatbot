@@ -1,0 +1,12 @@
+faiss-cpu==1.7.2
+fastapi==0.81.0
+PyMySQL==1.0.2
+mysql-connector-python==8.0.29
+openpyxl==3.0.10
+pandas==1.4.4
+sentence-transformers==2.2.2
+SQLAlchemy==1.4.40
+tqdm==4.64.0
+transformers==4.21.2
+uvicorn==0.18.3
+cryptography==37.0.4
