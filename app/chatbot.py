@@ -1,53 +1,35 @@
-import pandas as pd
-import numpy as np
-import faiss
 import random
-from pathlib import Path
-from sentence_transformers import SentenceTransformer
-from app.models import cnxpool
+from app.connection import elastic
+import requests
+from app.config import PINGPONG_API_KEY , PINGPONG_URL , INDEX_NAME
+from app.utils import jaccard_similarity , analyzer, insert_data
 
-BASE_DIR = str(Path(__file__).resolve().parent)
+def ping_pong_reply(question):
+    url = PINGPONG_URL + "10"
+    data = {"request": {"query": f"{question}"}}
+    header = {"Authorization": f"{PINGPONG_API_KEY}"}
+    res = requests.post(url=url ,headers=header, json=data).json()
+    return res['response']['replies'][0]['text']
 
-embedder = SentenceTransformer(
-    BASE_DIR + "/sbert_models/Huffon_sentence-klue-roberta-base")
-index = faiss.read_index(BASE_DIR + "/faiss/sts.index")
+def search_reply(question):
+    query ={"match": {"user.nori": f"{question}"}}
+    res = elastic.client.search(index=INDEX_NAME,query=query,source=['user','system'],size=5)
+    user = [ i['_source']['user'] for i in res['hits']['hits']]
+    systems = [ i['_source']['system'] for i in res['hits']['hits']]
+    question_analyze = analyzer(question)
+    sim_scores = [ jaccard_similarity(question_analyze , analyzer(i)) for i in user ]
+    
+    if max(sim_scores) <= 0.5:
+        answer = ping_pong_reply(question)
+        insert_data(question, answer, "generate")
+        return ping_pong_reply(question)
+    
+    answers = [ i[0] for i in zip(systems,sim_scores) if i[1] > 0.5]
+    top = random.choice(answers).replace("00","선생")
+    return top
 
-THRESHOLD = 50
-SEARCH_AMOUNT = 5
 
-
-def chatbot_answer(query):
-    # Retrieval part
-    qestion_embedding = embedder.encode(query, convert_to_tensor=True)
-    input_embedding = np.expand_dims(qestion_embedding, axis=0)
-    distances, indices = index.search(input_embedding, SEARCH_AMOUNT)
-
-    # max distance 가 임계치를 안넘으면 무슨말인지 모르겠어요 하고 NoSQL에 축적
-    if np.min(distances[0]) > THRESHOLD:
-        # print(np.max(distances[0]))
-        return "무슨 말인지 잘 모르겠어요 다시 한 번 말씀해주시겠어요??"
-
-    index_q = [i[1]
-               for i in zip(distances[0], indices[0]) if i[0] <= THRESHOLD]
-    index_q = list(map(lambda x: x+1, index_q))
-    index_q = str(index_q).replace('[', '(').replace(']', ')')
-
-    # MySQL DB에서 임베딩 벡터를 검색 Bi-Encoder
-    cnx = cnxpool.get_connection()
-    cursor = cnx.cursor(dictionary=True)
-
-    sql = f"""SELECT `index` , `user`, `system` FROM chatbot_data WHERE `index` IN {index_q};"""
-    cursor.execute(sql)
-    res = cursor.fetchall()
-
-    cnx.close()
-    cursor.close()
-
-    temp = pd.DataFrame(res)
-
-    if len(temp) < 2:
-        return temp.loc[0].system
-
-    return temp.loc[random.randint(0, 1)].system
-
-#print(chatbot_answer("사랑했던 사람이 떠났어"))
+if __name__ == "__main__":
+    elastic.connect()
+    print(search_reply("집가서 뭐하지.."))
+    elastic.close()

@@ -1,10 +1,10 @@
-from typing import Optional, Dict
+from typing import Dict
 from fastapi import FastAPI
-from app.chatbot import chatbot_answer
-from app.kakao_api import KakaoTemplate
+from app.chatbot import search_reply
+from app.kakao_api import skillTemplate
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from app.models import mongodb
+from app.connection import elastic
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -18,27 +18,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-skillTemplate = KakaoTemplate()
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "FastApi"}
-
-
 class ComportbotRequest(BaseModel):
     userRequest: Dict
+    
+class testRequest(BaseModel):
+    question : str
+
+@app.post("/test")
+async def chatbotAPI(request: testRequest):
+        query = request.question
+        result = search_reply(query)
+        return result
 
 
 @app.post("/chatbot")
 async def chatbotAPI(request: ComportbotRequest):
     try:
         query = request.userRequest['utterance']
-        # app.logger.info(f"input query : {str(query)}")
-        result = chatbot_answer(query)
-
-        mongodb.connect()
-
+        print(request.userRequest)
+        result = search_reply(query)
         return skillTemplate.send_response(result)
 
     except Exception as e:
@@ -49,9 +47,11 @@ async def chatbotAPI(request: ComportbotRequest):
 
 @app.on_event("startup")
 def on_app_start():
+    elastic.connect()
     print("hello server")
 
 
 @app.on_event("shutdown")
 def on_app_shutdown():
+    elastic.close()
     print("bye server")

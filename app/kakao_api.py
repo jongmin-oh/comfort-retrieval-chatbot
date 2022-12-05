@@ -22,3 +22,5 @@ class KakaoTemplate:
                 self.TextComponent(utterance)
             )
         return responseBody
+    
+skillTemplate = KakaoTemplate()

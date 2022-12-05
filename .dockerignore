@@ -1,0 +1,7 @@
+.git 
+.cache
+.gitignore
+
+*.md
+
+/data
