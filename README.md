@@ -3,14 +3,13 @@
 
 [http://pf.kakao.com/\_BNZRb](http://pf.kakao.com/_BNZRb)
 
-![image](https://user-images.githubusercontent.com/23625693/207802466-36bc74b5-de91-4650-a4ba-a53d8d21c7a3.png){: width="50%" height="50%"}
+![image](https://user-images.githubusercontent.com/23625693/207803425-58d20824-873e-407a-9267-90bd6f792238.png)
 
 ---
 
 ### **1\. 캐릭터 소개**
 
-![image](https://user-images.githubusercontent.com/23625693/207802511-7d1c4348-d64e-4620-8455-d1299f523291.png){: width="50%" height="50%"}
-
+![image](https://user-images.githubusercontent.com/23625693/207803525-6a134a39-22cd-45be-8e96-8657f776084f.png)
 
 **이름 : 오복이**
 
