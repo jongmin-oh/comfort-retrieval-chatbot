@@ -3,13 +3,14 @@
 
 [http://pf.kakao.com/\_BNZRb](http://pf.kakao.com/_BNZRb)
 
-[##_Image|kage@bPhDwh/btrS08qmRrL/h3t2CcerH6KePLtgthIF7K/img.png|CDM|1.3|{"originWidth":620,"originHeight":348,"style":"alignLeft","width":363,"height":204}_##]
+![image](https://user-images.githubusercontent.com/23625693/207802466-36bc74b5-de91-4650-a4ba-a53d8d21c7a3.png)
 
 ---
 
 ### **1\. 캐릭터 소개**
 
-[##_Image|kage@m72Aa/btrS09bIyIS/vdJOCWHkdeqUjzZP7hPRFK/img.png|CDM|1.3|{"originWidth":1024,"originHeight":1024,"style":"alignLeft","width":253,"height":253,"filename":"DALL&amp;amp;amp;amp;amp;middot;E 2022-11-18 17.17.38 - A very cute counselor seal animation character.png"}_##]
+![image](https://user-images.githubusercontent.com/23625693/207802511-7d1c4348-d64e-4620-8455-d1299f523291.png)
+
 
 **이름 : 오복이**
 
@@ -68,4 +69,13 @@
  - 가입절차 및 채널 생성은 생략하겠습니다..
 
 ---
+
+위로봇 오복이의 프로세스는 아주 간단하게 설계되어있습니다.
+
+웹 서버는 Python 언어를 기반으로한 FastAPI를 사용했습니다.
+
+웹 서버와 같은 인스턴스 안에는 엘라스틱서치 검색엔진이 있습니다.
+
+![image](https://user-images.githubusercontent.com/23625693/207802652-3d379b64-bf0a-433f-a8fb-c886eadf3191.png)
+
 
