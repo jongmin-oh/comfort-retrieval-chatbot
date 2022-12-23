@@ -16,10 +16,22 @@ def jaccard_similarity(sentence1, sentence2):
     # Find intersection of two sets
     nominator = A.intersection(B)
     # Find union of two sets
-    denominator = A.union(B)
+    # denominator = A.union(B)
+
+    # 두개의 문장 중에서 토큰의 길이가 큰 것을 분모로한다.
+    if len(A) > len(B):
+        denominator = A
+    elif len(B) > len(A):
+        denominator = B
+    elif len(B) == len(A):
+        denominator = A
+
     # Take the ratio of sizes
-    similarity = len(nominator) / len(denominator)
-    return similarity
+    try:
+        similarity = len(nominator) / len(denominator)
+    except ZeroDivisionError:
+        similarity = 0.0
+    return 
 
 def get_max_idx():
     body = {"sort": [{"idx": {"order": "desc"}}], "size": 1}
