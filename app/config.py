@@ -1,29 +1,53 @@
-import json
+# configs.py
 from pathlib import Path
 from typing import Optional
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+from pydantic import BaseSettings, BaseModel
 
 
-def get_secret(
-    key: str,
-    default_value: Optional[str] = None,
-    json_path: str = str(BASE_DIR / "secrets.json"),
-):
-    with open(json_path) as f:
-        secrets = json.loads(f.read())
-    try:
-        return secrets[key]
-    except KeyError:
-        if default_value:
-            return default_value
-        raise EnvironmentError(f"Set the {key} environment variable.")
+class MainPath(BaseModel):
+    BASE_DIR: Path = Path(__file__).resolve().parent.parent
+    DATA_DIR: Path = BASE_DIR.joinpath("data")
+    FAISS_DIR: Path = BASE_DIR.joinpath("models", "faiss")
+    MODEL_DIR: Path = BASE_DIR.joinpath("models", "onnx")
+    LOGS_DIR: Path = BASE_DIR.joinpath("logs")
+    PROMPT_DIR: Path = BASE_DIR.joinpath("data", "prompts")
 
 
-ELASTIC_HOST = get_secret("ELASTIC_HOST")
-PINGPONG_API_KEY = get_secret("PINGPONG_KEY")
-PINGPONG_URL = get_secret("PINGPONG_URL")
-INDEX_NAME = 'chatbot'
+class MainConfig(BaseSettings):
+    # environment specific variables do not need the Field class
+    HOST: Optional[str] = None
+    PORT: Optional[int] = None
+    LOG_LEVEL: Optional[str] = None
 
-if __name__ == "__main__":
-    pass
+    DB_HOST: Optional[str] = None
+    DB_PORT: Optional[int] = None
+    DB_USER: Optional[str] = None
+    DB_PASSWORD: Optional[str] = None
+    DB_NAME: Optional[str] = None
+
+    class Config:
+        env_file: str = ".env"
+
+
+class OpenAiConfig(BaseSettings):
+    OPENAI_API_KEY: Optional[str] = None
+
+    class Config:
+        env_file: str = ".env"
+
+
+class ClovaConfig(BaseSettings):
+    CLOVA_HOST: Optional[str] = None
+    CLOVA_API_KEY: Optional[str] = None
+    CLOVA_API_PRIVATE_KEY: Optional[str] = None
+    CLOVA_REQUEST_ID: Optional[str] = None
+
+    class Config:
+        env_file: str = ".env"
+
+
+paths = MainPath()
+settings = MainConfig()
+openai_settings = OpenAiConfig()
+clova_settings = ClovaConfig()

@@ -1,14 +1,13 @@
+models/*
+data/*
+resources/*
+postgres
+chroma/*
+
 # Byte-compiled / optimized / DLL files
-app/__pycache__
-data/__pycache__
+__pycache__/
 *.py[cod]
 *$py.class
-
-docker-compose.yml
-data/
-app/faiss/
-app/sbert_models/
-secrets.json
 
 # C extensions
 *.so
@@ -32,9 +31,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-*.DS_Store
 MANIFEST
-
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -111,7 +108,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
