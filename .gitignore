@@ -1,7 +1,6 @@
 models/*
 data/*
 resources/*
-postgres
 chroma/*
 
 # Byte-compiled / optimized / DLL files

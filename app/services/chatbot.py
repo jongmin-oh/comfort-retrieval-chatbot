@@ -1,30 +1,23 @@
-from typing import List, Tuple, Final
-
 import numpy as np
-import chromadb
+from chromadb import PersistentClient
 from onnxruntime import InferenceSession
 from transformers import AutoTokenizer
 
-from app.config import paths
-from app.utility.utils import mean_pooling, clean
+from app.config import paths, Parms
+from app.utility.utils import mean_pooling, clean, top_k_sampling
 from app.services import Singleton
 
 
 class ComfortBot(metaclass=Singleton):
     def __init__(self):
         super().__init__()
-        self.base_model = "snunlp/KR-SBERT-V40K-klueNLI-augSTS"
-        self.onnx_path = paths.MODEL_DIR.joinpath("sbert-model_uint8.onnx")
-        self.sess = InferenceSession(
-            str(self.onnx_path), providers=["CPUExecutionProvider"]
-        )
-        self.chroma_client = chromadb.PersistentClient()
+        self.onnx_path = str(paths.MODEL_DIR.joinpath("sbert-model_uint8.onnx"))
+        self.sess = InferenceSession(self.onnx_path, providers=["CPUExecutionProvider"])
+        self.chroma_client = PersistentClient()
         self.collection = self.chroma_client.get_collection("answers")
-        self.tokenizer = AutoTokenizer.from_pretrained(self.base_model)
-        self._THREADHOLD: Final[int] = 0.8
+        self.tokenizer = AutoTokenizer.from_pretrained(paths.MODEL_DIR)
 
     def encode(self, query: str, normalize_embeddings=False) -> np.ndarray:
-        # user turn sequence to query embedding
         model_inputs = self.tokenizer(query, return_tensors="pt")
         inputs_onnx = {k: v.cpu().detach().numpy() for k, v in model_inputs.items()}
         sequence = self.sess.run(None, inputs_onnx)
@@ -38,15 +31,30 @@ class ComfortBot(metaclass=Singleton):
     def reply(self, query: str) -> str:
         cleaned = clean(query)
         if cleaned == "":
-            return "헤헤..."
+            return Parms.EVASION_ANSWER
 
         query_embedding = self.encode(query, normalize_embeddings=True).tolist()
-        result = self.collection.query(
+        response = self.collection.query(
             query_embeddings=query_embedding,
-            n_results=1,
+            n_results=5,
+            include=["metadatas", "distances"],
         )
 
-        return result["metadatas"][0][0]["answer"]
+        res_scores = [1 - s for s in response["distances"][0]]
+        res_answers = [a["answer"] for a in response["metadatas"][0]]
+
+        exceeded_scores = []
+        exceeded_answers = []
+        for score, answer in zip(res_scores, res_answers):
+            if score > Parms.THREADHOLD:
+                exceeded_scores.append(score)
+                exceeded_answers.append(answer)
+
+        if len(exceeded_scores) == 0:
+            return Parms.EVASION_ANSWER
+
+        picked = top_k_sampling(exceeded_scores, weight=3)
+        return exceeded_answers[picked]
 
 
 if __name__ == "__main__":
