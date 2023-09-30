@@ -60,6 +60,7 @@ http://pf.kakao.com/_BNZRb
 ### 웹 프레임워크
 
 - FastAPI
+- Gunicorn
 
 선정 이유 :
 1. Python 기반 웹 프레임 워크
