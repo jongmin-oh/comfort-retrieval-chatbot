@@ -94,10 +94,11 @@ http://pf.kakao.com/_BNZRb
    - klue/roberta-base -> snunlp/KR-SBERT-V40K-klueNLI-augSTS
    - 데이터 증량기법을 사용해 재학습한 모델로 변경
 
-#### 인스턴스 내 RDB PostgreSQL 구축 (2023.03.06)
-- csv 데이터를 Pandas로 불러와서 답변을 찾는 방식에서 PostgreSQL RDBMS 를 통해 답변  Table을 만들어 fetch 해서 사용하게 변경
-- 시간이 조금 늘어나지만 메모리 절약(답변 DB를 메모리에서 계속 들어있지 않음)
-- 사용자가 질문한 내용과 "오복이"가 답변한 답변 로그를 DB에 수집
+#### ~~인스턴스 내 RDB PostgreSQL 구축 (2023.03.06)~~
+- ~~csv 데이터를 Pandas로 불러와서 답변을 찾는 방식에서 PostgreSQL RDBMS 를 통해 답변  Table을 만들어 fetch 해서 사용하게 변경~~
+- ~~시간이 조금 늘어나지만 메모리 절약(답변 DB를 메모리에서 계속 들어있지 않음)~~
+- ~~사용자가 질문한 내용과 "오복이"가 답변한 답변 로그를 DB에 수집~~
+- ChromaDB가 Metadata 같이 처리하게 수정, 로그 수집 하지않음(2023.09.30)
 
 #### Top-K sampling 적용(2023.03.11)
 
