@@ -18,4 +18,4 @@ worker_class = "uvicorn.workers.UvicornWorker"
 reload = True
 # accesslog = "./logs/gunicorn/access.log"
 errorlog = "./logs/gunicorn/error.log"
-loglevel = "info"
+loglevel = os.getenv("LOG_LEVEL")

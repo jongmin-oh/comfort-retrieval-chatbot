@@ -5,7 +5,7 @@ from pydantic import BaseSettings, BaseModel
 
 
 class Parms:
-    THREADHOLD: float = 0.8
+    THREADHOLD: float = 0.6
     TOP_K: int = 5
     EVASION_ANSWER = "헤헤...무슨말씀이시죠?"
 
