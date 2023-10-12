@@ -8,7 +8,7 @@
  
  ## "오복이"소개
  
-![image](https://github.com/jongmin-oh/comfort_chatbot/assets/23625693/b1a1596d-dd02-46fe-8244-22a6692ee857)
+![obok](https://github.com/jongmin-oh/comfort_chatbot/assets/23625693/6cacc048-9994-4f5e-a745-fecae1dbc1a3)
 
 - 이름 : 오복이
 - 직업 : 심리상담사
