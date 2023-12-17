@@ -1,9 +1,22 @@
 {
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": false,
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
     },
-    "python.formatting.provider": "none"
+    "pylint.args": [
+        "--disable=C0111",
+        "--disable=C0114",
+        "--disable=C0115",
+        "--disable=C0116",
+        "--disable=E0611",
+        "--disable=C0103",
+        "--disable=C0121",
+        "--disable=E1101",
+        "--disable=E0213",
+        "--disable=W0718",
+    ],
+    "flake8.args": [
+        "--ignore=E203",
+        "--max-line-length=120",
+        "--ignore=W291"
+    ],
 }

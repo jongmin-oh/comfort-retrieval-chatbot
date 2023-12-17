@@ -8,4 +8,4 @@ aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS
 docker pull ${AWS_ECR_URL}/comfort:latest
 
 docker tag ${AWS_ECR_URL}/comfort:latest comfort:latest
-docker run --name comfort --restart=always -v $PWD/logs:/opt/comfort/logs -d -p ${PORT}:${PORT} comfort:latest
+docker run --name comfort --restart=always --network=bridge -v $PWD/logs:/opt/comfort/logs -d -p ${PORT}:${PORT} comfort:latest

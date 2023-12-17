@@ -8,7 +8,7 @@ class Parms:
     THREADHOLD: float = 0.5
     TOP_K: int = 5
     EMBED_WEIGHT: float = 0.6
-    KEYWORD_WEIGHT: int = 0.4
+    KEYWORD_WEIGHT: float = 0.4
 
     EVASION_ANSWER = "헤헤...무슨말씀이시죠?"
 

@@ -17,6 +17,7 @@ class RRF:
 
         return ranking
 
+    @staticmethod
     def reciprocal_rank(rank):
         """주어진 순위에 대한 Reciprocal Rank를 계산하는 함수"""
         try:
