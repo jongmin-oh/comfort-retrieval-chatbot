@@ -18,7 +18,7 @@
 > 
 | 일상대화 예시                                   | 고민대화 예시                                   |
 |----------------------------------------------|-----------------------------------------------|
-| <img src="assets/일상.jpeg" width="75%">  | <img src="assets/고민.jpeg" width="75%">  |
+| <center> <img src="assets/일상.jpeg" width="75%"> </center>| <img src="assets/고민.jpeg" width="75%">  |
 
 ***
 
