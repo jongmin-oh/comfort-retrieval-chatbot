@@ -3,17 +3,14 @@ FROM python:3.11.5-slim
 #설치시 질문 안나오게 설정
 ARG DEBIAN_FRONTEND=noninteractive
 
-ARG DIR
-ENV DIR $DIR
-
 # 디렉터리 생성
-RUN mkdir $DIR
+RUN mkdir /opt/app
 
 # 소스코드 복사
-COPY . $DIR
+COPY . /opt/app
 
 #작업 폴더 설정
-WORKDIR $DIR
+WORKDIR /opt/app
 
 #PyTorch 설치
 RUN pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
@@ -21,5 +18,5 @@ RUN pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 # 파이썬 패키지 설치
 RUN pip install -r requirements.txt
 
-RUN ["chmod", "+x", "./start_service.sh"]
-ENTRYPOINT ["./start_service.sh"]
+# 실행
+CMD ["gunicorn", "manage:app", "-c", "gunicorn.conf.py"]

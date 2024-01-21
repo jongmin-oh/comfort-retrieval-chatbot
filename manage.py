@@ -15,7 +15,9 @@ app.add_middleware(
 )
 
 app.include_router(bots.router)
-
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
 
 @app.on_event("startup")
 def on_app_start():
