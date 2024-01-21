@@ -1,8 +1,9 @@
-from app.config import Parms
+from app.config import EMBED_WEIGHT, KEYWORD_WEIGHT
 
 
 class RRF:
-    def get_ranking(query1_ids, query2_ids):
+    @classmethod
+    def get_ranking(cls, query1_ids, query2_ids):
         # 중복 없는 모든 값들을 구합니다.
         all_values = list(set(query1_ids + query2_ids))
 
@@ -17,17 +18,17 @@ class RRF:
 
         return ranking
 
-    @staticmethod
-    def reciprocal_rank(rank):
+    @classmethod
+    def reciprocal_rank(cls, rank):
         """주어진 순위에 대한 Reciprocal Rank를 계산하는 함수"""
         try:
             return 1 / rank
         except TypeError:
             return 0.0
 
-    @staticmethod
-    def get_rrf_scores(query1_ids, query2_ids):
-        ranking = __class__.get_ranking(query1_ids, query2_ids)
+    @classmethod
+    def get_rrf_scores(cls, query1_ids, query2_ids):
+        ranking = RRF.get_ranking(query1_ids, query2_ids)
 
         ids = []
         scores = []
@@ -38,11 +39,11 @@ class RRF:
             keyword_rank = ranking[key][1]
 
             # 각 검색 시스템의 Reciprocal Rank 계산
-            embed_rr = __class__.reciprocal_rank(embed_rank)
-            keyword_rr = __class__.reciprocal_rank(keyword_rank)
+            embed_rr = RRF.reciprocal_rank(embed_rank)
+            keyword_rr = RRF.reciprocal_rank(keyword_rank)
 
             # 가중치가 적용된 Reciprocal Rank 계산
-            rrf = (Parms.EMBED_WEIGHT * embed_rr) + (Parms.KEYWORD_WEIGHT * keyword_rr)
+            rrf = (EMBED_WEIGHT * embed_rr) + (KEYWORD_WEIGHT * keyword_rr)
 
             scores.append(rrf)
             ids.append(key)

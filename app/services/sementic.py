@@ -1,9 +1,11 @@
 import numpy as np
-from onnxruntime import InferenceSession
-from transformers import AutoTokenizer
 import faiss
 
-from app.config import paths, Parms
+from onnxruntime import InferenceSession
+from transformers import AutoTokenizer
+
+
+from app.config import paths, TOP_K
 from app.utility.utils import ModelProcessor
 
 
@@ -32,5 +34,5 @@ class EmbeddingModel:
 
     def search(self, query: str):
         embedding = np.expand_dims(self.encode(query), axis=0)
-        _, ids = self.faiss_index.search(embedding, Parms.TOP_K)
+        _, ids = self.faiss_index.search(embedding, TOP_K)
         return ids[0].tolist()
