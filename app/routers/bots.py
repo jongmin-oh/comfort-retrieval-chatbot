@@ -29,6 +29,7 @@ async def comfort(request: ComfortBotTestRequest):
 
 @router.post("/kakao/respond")
 async def kakao(request: ComfortbotRequest):
+    # print(json.dumps(request.__dict__, ensure_ascii=False, indent=2))
     query = request.userRequest["utterance"]
     result = ComfortBot().reply(query)
     return skillTemplate.send_response(result)
