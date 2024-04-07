@@ -12,9 +12,6 @@ COPY . /opt/app
 #작업 폴더 설정
 WORKDIR /opt/app
 
-#PyTorch 설치
-RUN pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
-
 # 파이썬 패키지 설치
 RUN pip install -r requirements.txt
 
