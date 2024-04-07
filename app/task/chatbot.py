@@ -1,8 +1,8 @@
 import pandas as pd
 
-from app.services import Singleton
-from app.services.sementic import EmbeddingModel
-from app.services.keyword import KeywordModel
+from app.task import Singleton
+from app.task.sementic import EmbeddingModel
+from app.task.keyword import KeywordModel
 
 
 from app.config import paths

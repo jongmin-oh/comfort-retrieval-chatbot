@@ -42,7 +42,7 @@ class Loggers:
     def get_file_logger(self):
         formatter = logging.Formatter("%(message)s")
         file_handler = logging.FileHandler("logs/log.log")
-        return  self.create_logger("file", formatter, file_handler)
+        return self.create_logger("file", formatter, file_handler)
 
 
 console_logger = Loggers().get_console_logger()

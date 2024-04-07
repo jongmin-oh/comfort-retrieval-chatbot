@@ -3,8 +3,8 @@ from typing import Dict
 from fastapi import APIRouter
 
 from pydantic import BaseModel
-from app.services.chatbot import ComfortBot
-from app.services.kakao_api import skillTemplate
+from app.task.chatbot import ComfortBot
+from app.models import skillTemplate
 
 router = APIRouter(
     prefix="/chatbot",
@@ -29,6 +29,7 @@ async def comfort(request: ComfortBotTestRequest):
 
 @router.post("/kakao/respond")
 async def kakao(request: ComfortbotRequest):
+    # print(json.dumps(request.__dict__, ensure_ascii=False, indent=2))
     query = request.userRequest["utterance"]
     result = ComfortBot().reply(query)
     return skillTemplate.send_response(result)

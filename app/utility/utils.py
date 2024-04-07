@@ -1,8 +1,9 @@
 import random
 import re
 from typing import List
-
 import numpy as np
+
+
 def clean(text: str):
     jamo_patterns = "([ㄱ-ㅎㅏ-ㅣ]+)"  # 한글 단일 자음&모음제거
     english_patterns = "[^가-힣ㄱ-ㅎㅏ-ㅣ\\s]"
@@ -30,6 +31,7 @@ class ModelProcessor:
         sum_embeddings = np.sum(token_embeddings * input_mask_expanded, axis=1)
         sum_mask = np.clip(np.sum(input_mask_expanded, axis=1), a_min=1e-9, a_max=None)
         return sum_embeddings / sum_mask, input_mask_expanded, sum_mask
+    
     @classmethod
     def softmax(cls, x):
         f_x = np.exp(x) / np.sum(np.exp(x))

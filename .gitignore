@@ -1,7 +1,6 @@
-models/*
+representation/*
 data/*
-resources/*
-chroma/*
+assets/data/*
 
 .env
 

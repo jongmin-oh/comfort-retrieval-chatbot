@@ -21,6 +21,7 @@ class EmbeddingModel:
 
     def encode(self, query: str, normalize_embeddings=True) -> np.ndarray:
         model_inputs = self.tokenizer(query, return_tensors="pt")
+        print(model_inputs)
         inputs_onnx = {k: v.cpu().detach().numpy() for k, v in model_inputs.items()}
         sequence = self.sess.run(None, inputs_onnx)
         query_embedding = ModelProcessor.mean_pooling(

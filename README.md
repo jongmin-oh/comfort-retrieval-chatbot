@@ -159,7 +159,7 @@ http://pf.kakao.com/_BNZRb
  - Streamlit 프레임워크 사용
 
 #### 오복이 웹사이트 https 적용 (2023.10.10)
- - 도메인 구매
+ - 도메인 구매(j5ng.com)
  - AWS CloudFront 활용하여 https 보안 프로토콜 적용
 
 ***
