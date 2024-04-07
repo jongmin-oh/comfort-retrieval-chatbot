@@ -1,5 +1,4 @@
-representation/*
-data/*
+representation
 assets/data/*
 
 .env
